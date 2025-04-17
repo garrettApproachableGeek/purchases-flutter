@@ -81,6 +81,20 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
+            
+        case "dismissPaywall":
+            if #available(iOS 15.0, *) {
+				if let rootVC = UIApplication.shared.windows.first?.rootViewController,
+				   let presentedVC = rootVC.presentedViewController {
+					presentedVC.dismiss(animated: true) {
+						result(nil)
+					}
+				} else {
+					result(nil)
+				}
+            } else {
+                NSLog("Dismissing paywall requires iOS 15+")
+            }
 
         case "presentPaywallIfNeeded":
             guard let args = call.arguments as? Dictionary<String, Any> else {

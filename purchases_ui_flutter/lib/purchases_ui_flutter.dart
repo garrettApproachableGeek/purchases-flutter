@@ -25,6 +25,11 @@ class RevenueCatUI {
     return _parseStringToResult(result);
   }
 
+  static Future<void> dismissPaywall() async {
+    await _methodChannel.invokeMethod('dismissPaywall');
+    return;
+  }
+
   /// Presents the paywall as an activity on android or a modal in iOS as long
   /// as the user does not have the given entitlement identifier active.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
